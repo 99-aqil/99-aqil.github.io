@@ -29,17 +29,9 @@ $submitJson = '{
         {
             "action_source": "website",
             "event_name": [
-                "ViewContent",
-                "Search",
-                "AddToCart",
-                "Purchase",
-                "Subscribe",
-                "Lead",
-                "Download",
-                "SignUp",
-                "Contact",
-                "Custom",
-                "PageView"
+                "Google",
+                "Microsoft",
+                "OpenAI"
             ],
             "event_time": ' . time() . ',
             "event_source_url": "' . $actual_link . '",
