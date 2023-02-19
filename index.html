@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Button Links</title>
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '554061686441388');
+      fbq('track', 'PageView');
+    </script>
+  </head>
+  <body>
+    <h1>Welcome to Button Links!</h1>
+    <p>Click on one of the buttons below to visit the official website of Google, Microsoft, or OpenAI:</p>
+    <button onclick="handleClick('Google'); window.open('https://www.google.com','_blank');">Google</button>
+    <button onclick="handleClick('Microsoft'); window.open('https://www.microsoft.com','_blank');">Microsoft</button>
+    <button onclick="handleClick('OpenAI'); window.open('https://www.openai.com','_blank');">OpenAI</button>
+
+    <script>
+      function handleClick(productName) {
+        var data = {
+          eventName: [
+            'Google',
+            'Mircrosoft',
+            'OpenAI'
+          ],
+          eventTime: Math.floor(Date.now() / 1000),
+          eventSourceUrl: window.location.href,
+          userData: {
+            email: 'joe@eg.com',
+            phone: '12345678901'
+          },
+          customData: {
+            contents: [
+              {
+                id: productName,
+                quantity: 1
+              }
+            ],
+            currency: 'USD',
+            value: 123.45
+          }
+        };
+
+        var pixelId = '554061686441388';
+        var accessToken = 'EAAGrWnKgED8BAGhZBtbNPV1rdZCBkPr8s2wxJXi9EUCrbGFqesG5D1iRmgKZCydElXxdC6I5ybUowib8aQr2Xs5ymIgP2HN1bBk9opifEuXJH9ByawEMhxSZB60BIDezPcOfAMORZCvuJAVmvOr3J1J0K84X42jIcandrz4UzMjX0Kgfq7SaJ8zkcbyMUdqcZD';
+        var apiUrl = 'https://graph.facebook.com/v13.0/' + pixelId + '/events';
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', apiUrl);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+        xhr.send(JSON.stringify(data));
+      }
+    </script>
+  </body>
+</html>
