@@ -2,72 +2,16 @@
 <html>
   <head>
     <title>Button Links</title>
-    <!-- Include the Facebook pixel code -->
-    <script>
-      !function(f,b,e,v,n,t,s)
-      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(window, document,'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', '554061686441388');
-      fbq('track', 'PageView');
-    </script>
   </head>
   <body>
+    <?php
+    include './fb_conversions.php;
+    ?>
+
     <h1>Welcome to Button Links!</h1>
     <p>Click on one of the buttons below to visit the official website of Google, Microsoft, or OpenAI:</p>
-    <button onclick="handleClick('Google'); window.open('https://www.google.com','_blank');">Google</button>
-    <button onclick="handleClick('Microsoft'); window.open('https://www.microsoft.com','_blank');">Microsoft</button>
-    <button onclick="handleClick('OpenAI'); window.open('https://www.openai.com','_blank');">OpenAI</button>
-
-    <script>
-      function handleClick(productName) {
-        var pixelId = '554061686441388';
-        var accessToken = 'EAAGrWnKgED8BABZBX6DaIXZCb7Cybd3BQiGnSroCwJmqtgVPJydmamZAbdfsF8fDif0v0WfEhfEEvCYkfEiAygc455MhK9LJL5GUBPct7ZA8HCmy7OFz8MBeFIeA6BaCqjZA39FjH0UJBDeI2Kid5W4rYW6yGXDm7sgfqZAivr5FQOSJTuc9alel3mqXg4f3EZD';
-        var apiUrl = 'https://graph.facebook.com/v13.0/' + pixelId + '/events';
-
-        var data = {
-          eventName: 'ButtonClicked_' + productName,
-          eventTime: Math.floor(Date.now() / 1000),
-          eventSourceUrl: window.location.href,
-          userData: {
-            email: 'joe@eg.com',
-            phone: '12345678901'
-          },
-          customData: {
-            contents: [
-              {
-                id: productName,
-                quantity: 1
-              }
-            ],
-            currency: 'USD',
-            value: 123.45
-          }
-        };
-
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', apiUrl);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
-
-        if (productName === 'Google') {
-          // Track the Google button click
-          fbq('track', 'GoogleButtonClicked', {buttonName: productName});
-          xhr.send(JSON.stringify(data));
-        } else if (productName === 'Microsoft') {
-          // Track the Microsoft button click
-          fbq('track', 'MicrosoftButtonClicked', {buttonName: productName});
-          xhr.send(JSON.stringify(data));
-        } else if (productName === 'OpenAI') {
-          // Track the OpenAI button click
-          fbq('track', 'OpenAIButtonClicked', {buttonName: productName});
-          xhr.send(JSON.stringify(data));
-        }
-      }
-    </script>
+    <button onclick="window.open('https://www.google.com','_blank');">Google</button>
+    <button onclick="window.open('https://www.microsoft.com','_blank');">Microsoft</button>
+    <button onclick="window.open('https://www.openai.com','_blank');">OpenAI</button>
   </body>
 </html>
