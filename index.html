@@ -4,14 +4,76 @@
     <title>Button Links</title>
   </head>
   <body>
-    <?php
-    include './fb_conversions.php;
-    ?>
-
     <h1>Welcome to Button Links!</h1>
     <p>Click on one of the buttons below to visit the official website of Google, Microsoft, or OpenAI:</p>
-    <button onclick="window.open('https://www.google.com','_blank');">Google</button>
-    <button onclick="window.open('https://www.microsoft.com','_blank');">Microsoft</button>
-    <button onclick="window.open('https://www.openai.com','_blank');">OpenAI</button>
+    <button id="googleButton">Google</button>
+    <button id="microsoftButton">Microsoft</button>
+    <button id="openaiButton">OpenAI</button>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+
+      // Send tracking data to Facebook
+      function sendConversionAPIEvent(eventName) {
+        var data = {
+          data: [
+            {
+              event_name: eventName,
+              event_time: Math.floor(Date.now() / 1000),
+              user_data: {
+                client_ip_address: "",
+                client_user_agent: navigator.userAgent
+              }
+            }
+          ]
+        };
+        $.ajax({
+          $access_token = $_ENV('FacebookAccessToken');
+          $url = "https://graph.facebook.com/v12.0/{554061686441388}/events?access_token=" . $access_token;
+          method: "POST",
+          contentType: "application/json",
+          data: JSON.stringify(data),
+          success: function(response) {
+            console.log(response);
+          }
+        });
+      }
+
+      // Add event listeners to the buttons
+      $("#googleButton").click(function() {
+        sendConversionAPIEvent("Google");
+        $.ajax({
+          url: "track.php",
+          method: "POST",
+          data: { button: "Google" },
+          success: function(response) {
+            console.log(response);
+          }
+        });
+      });
+      $("#microsoftButton").click(function() {
+        sendConversionAPIEvent("Microsoft");
+        $.ajax({
+          url: "track.php",
+          method: "POST",
+          data: { button: "Microsoft" },
+          success: function(response) {
+            console.log(response);
+          }
+        });
+      });
+      $("#openaiButton").click(function() {
+        sendConversionAPIEvent("OpenAI");
+        $.ajax({
+          url: "track.php",
+          method: "POST",
+          data: { button: "OpenAI" },
+          success: function(response) {
+            console.log(response);
+          }
+        });
+      });
+
+    </script>
   </body>
 </html>
