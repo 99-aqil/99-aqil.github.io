@@ -2,19 +2,6 @@
 <html>
   <head>
     <title>Button Links</title>
-    <!-- Include the Facebook pixel code -->
-    <script>
-      !function(f,b,e,v,n,t,s)
-      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(window, document,'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', '554061686441388');
-      fbq('track', 'PageView');
-    </script>
   </head>
   <body>
     <h1>Welcome to Button Links!</h1>
@@ -25,12 +12,12 @@
 
     <script>
       function handleClick(productName) {
-        var pixelId = '554061686441388';
-        var accessToken =''EAAGrWnKgED8BAHadXtxhQ1bZAGSoh7ZCkreHwkGE2VsRxlI8vdBJk2watfK60IDP1Ykqc862HZBt5B6eBPo23hW4FZCUQu96lLOZCS3kUZCo4NywZCCukoPfJvxZAV4gmgHtWdsI4ZC0X3vNZCAfd5yeGlxHoHxauKUeLtwj4ZCqZB87UZBX9akSb3FZC6OevzdB6HEtgZD';
-        var apiUrl = 'https://graph.facebook.com/v13.0/' + pixelId + '/events';
-
         var data = {
-          eventName: 'ButtonClicked_' + productName,
+          eventName: [
+            'Google',
+            'Mircrosoft',
+            'OpenAI'
+          ],
           eventTime: Math.floor(Date.now() / 1000),
           eventSourceUrl: window.location.href,
           userData: {
@@ -49,24 +36,15 @@
           }
         };
 
+        var pixelId = '554061686441388';
+        var accessToken = 'EAAGrWnKgED8BAHadXtxhQ1bZAGSoh7ZCkreHwkGE2VsRxlI8vdBJk2watfK60IDP1Ykqc862HZBt5B6eBPo23hW4FZCUQu96lLOZCS3kUZCo4NywZCCukoPfJvxZAV4gmgHtWdsI4ZC0X3vNZCAfd5yeGlxHoHxauKUeLtwj4ZCqZB87UZBX9akSb3FZC6OevzdB6HEtgZD';
+        var apiUrl = 'https://graph.facebook.com/v13.0/' + pixelId + '/events';
+
         var xhr = new XMLHttpRequest();
         xhr.open('POST', apiUrl);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
-
-        if (productName === 'Google') {
-          // Track the Google button click
-          fbq('track', 'GoogleButtonClicked', {buttonName: productName});
-          xhr.send(JSON.stringify(data));
-        } else if (productName === 'Microsoft') {
-          // Track the Microsoft button click
-          fbq('track', 'MicrosoftButtonClicked', {buttonName: productName});
-          xhr.send(JSON.stringify(data));
-        } else if (productName === 'OpenAI') {
-          // Track the OpenAI button click
-          fbq('track', 'OpenAIButtonClicked', {buttonName: productName});
-          xhr.send(JSON.stringify(data));
-        }
+        xhr.send(JSON.stringify(data));
       }
     </script>
   </body>
