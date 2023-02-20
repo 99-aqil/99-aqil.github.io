@@ -6,74 +6,8 @@
   <body>
     <h1>Welcome to Button Links!</h1>
     <p>Click on one of the buttons below to visit the official website of Google, Microsoft, or OpenAI:</p>
-    <button id="googleButton; window.open('https://www.google.com','_blank');">Google</button>
-    <button id="microsoftButton; window.open('https://www.microsoft.com','_blank');">Microsoft</button>
-    <button id="openaiButton; window.open('https://www.openai.com','_blank');">OpenAI</button>
-
-    <script>
-      function handleClick(productName) {
-        var data = {
-          eventName: [
-            'Google',
-            'Mircrosoft',
-            'OpenAI'
-          ],
-          eventTime: Math.floor(Date.now() / 1000),
-          eventSourceUrl: window.location.href,
-          userData: {
-            email: 'joe@eg.com',
-            phone: '12345678901'
-          },
-          customData: {
-            contents: [
-              {
-                id: productName,
-                quantity: 1
-              }
-            ],
-            currency: 'USD',
-            value: 123.45
-          }
-        };
-
-        var pixelId = '554061686441388';
-        const accessToken = process.env.FACEBOOKACCESSTOKEN;
-        var apiUrl = 'https://graph.facebook.com/v13.0/' + pixelId + '/events';
-
-        // Send data to server
-        fetch(apiUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + accessToken
-          },
-          body: JSON.stringify(data)
-        })
-        .then(response => {
-          // Update the page with the information
-          var message = `Sent ${productName} click event to server at ${new Date().toISOString()}`;
-          var logElement = document.createElement('p');
-          logElement.textContent = message;
-          document.body.appendChild(logElement);
-        })
-        .catch(error => {
-          console.error('Error sending event to server:', error);
-        });
-      }
-
-      // Attach event listeners to buttons
-      document.getElementById('googleButton').addEventListener('click', function() {
-        handleClick('Google');
-        window.open('https://www.google.com','_blank');
-      });
-      document.getElementById('microsoftButton').addEventListener('click', function() {
-        handleClick('Microsoft');
-        window.open('https://www.microsoft.com','_blank');
-      });
-      document.getElementById('openaiButton').addEventListener('click', function() {
-        handleClick('OpenAI');
-        window.open('https://www.openai.com','_blank');
-      });
-    </script>
+    <button onclick="window.open('https://www.google.com','_blank');">Google</button>
+    <button onclick="window.open('https://www.microsoft.com','_blank');">Microsoft</button>
+    <button onclick="window.open('https://www.openai.com','_blank');">OpenAI</button>
   </body>
 </html>
