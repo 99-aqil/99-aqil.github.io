@@ -1,9 +1,4 @@
 <?php
-// ------------------------------------------------
-// This is a cURL Object
-// Created by: Gilberto C.
-// InteractiveUtopia.com
-// ------------------------------------------------
 
 class CurlServer
 {
