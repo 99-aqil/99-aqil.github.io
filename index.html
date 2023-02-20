@@ -2,78 +2,72 @@
 <html>
   <head>
     <title>Button Links</title>
+    <!-- Include the Facebook pixel code -->
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '554061686441388');
+      fbq('track', 'PageView');
+    </script>
   </head>
   <body>
     <h1>Welcome to Button Links!</h1>
     <p>Click on one of the buttons below to visit the official website of Google, Microsoft, or OpenAI:</p>
-    <button id="googleButton">Google</button>
-    <button id="microsoftButton">Microsoft</button>
-    <button id="openaiButton">OpenAI</button>
+    <button onclick="handleClick('Google'); window.open('https://www.google.com','_blank');">Google</button>
+    <button onclick="handleClick('Microsoft'); window.open('https://www.microsoft.com','_blank');">Microsoft</button>
+    <button onclick="handleClick('OpenAI'); window.open('https://www.openai.com','_blank');">OpenAI</button>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript">
+    <script>
+      function handleClick(productName) {
+        var pixelId = '554061686441388';
+        const accessToken = process.env.FACEBOOKACCESSTOKEN;
+        var apiUrl = 'https://graph.facebook.com/v13.0/' + pixelId + '/events';
 
-      // Send tracking data to Facebook
-      function sendConversionAPIEvent(eventName) {
         var data = {
-          data: [
-            {
-              event_name: eventName,
-              event_time: Math.floor(Date.now() / 1000),
-              user_data: {
-                client_ip_address: "",
-                client_user_agent: navigator.userAgent
+          eventName: 'ButtonClicked_' + productName,
+          eventTime: Math.floor(Date.now() / 1000),
+          eventSourceUrl: window.location.href,
+          userData: {
+            email: 'joe@eg.com',
+            phone: '12345678901'
+          },
+          customData: {
+            contents: [
+              {
+                id: productName,
+                quantity: 1
               }
-            }
-          ]
+            ],
+            currency: 'USD',
+            value: 123.45
+          }
         };
-        $.ajax({
-          $access_token = $_ENV('FACEBOOKACCESSTOKEN');
-          $url = "https://graph.facebook.com/v12.0/{554061686441388}/events?access_token=" . $access_token;
-          method: "POST",
-          contentType: "application/json",
-          data: JSON.stringify(data),
-          success: function(response) {
-            console.log(response);
-          }
-        });
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', apiUrl);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+
+        if (productName === 'Google') {
+          // Track the Google button click
+          fbq('track', 'GoogleButtonClicked', {buttonName: productName});
+          xhr.send(JSON.stringify(data));
+        } else if (productName === 'Microsoft') {
+          // Track the Microsoft button click
+          fbq('track', 'MicrosoftButtonClicked', {buttonName: productName});
+          xhr.send(JSON.stringify(data));
+        } else if (productName === 'OpenAI') {
+          // Track the OpenAI button click
+          fbq('track', 'OpenAIButtonClicked', {buttonName: productName});
+          xhr.send(JSON.stringify(data));
+        }
       }
-
-      // Add event listeners to the buttons
-      $("#googleButton").click(function() {
-        sendConversionAPIEvent("Google");
-        $.ajax({
-          url: "track.php",
-          method: "POST",
-          data: { button: "Google" },
-          success: function(response) {
-            console.log(response);
-          }
-        });
-      });
-      $("#microsoftButton").click(function() {
-        sendConversionAPIEvent("Microsoft");
-        $.ajax({
-          url: "track.php",
-          method: "POST",
-          data: { button: "Microsoft" },
-          success: function(response) {
-            console.log(response);
-          }
-        });
-      });
-      $("#openaiButton").click(function() {
-        sendConversionAPIEvent("OpenAI");
-        $.ajax({
-          url: "track.php",
-          method: "POST",
-          data: { button: "OpenAI" },
-          success: function(response) {
-            console.log(response);
-          }
-        });
-      });
-
     </script>
   </body>
 </html>
