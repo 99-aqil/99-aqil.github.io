@@ -28,7 +28,7 @@
           ]
         };
         $.ajax({
-          $access_token = $_ENV('FacebookAccessToken');
+          $access_token = $_ENV('FACEBOOKACCESSTOKEN');
           $url = "https://graph.facebook.com/v12.0/{554061686441388}/events?access_token=" . $access_token;
           method: "POST",
           contentType: "application/json",
