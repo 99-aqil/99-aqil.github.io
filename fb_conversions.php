@@ -1,5 +1,5 @@
 <?php
-$pixel_id = $_ENV['FACEBOOKPIXELID'];
+$pixel_id = '554061686441388';
 
 if (!$pixel_id) {
   // If FACEBOOK_PIXEL_ID is not set, exit the script
