@@ -37,7 +37,7 @@
         };
 
         var pixelId = '554061686441388';
-        var accessToken = 'EAAGrWnKgED8BAHadXtxhQ1bZAGSoh7ZCkreHwkGE2VsRxlI8vdBJk2watfK60IDP1Ykqc862HZBt5B6eBPo23hW4FZCUQu96lLOZCS3kUZCo4NywZCCukoPfJvxZAV4gmgHtWdsI4ZC0X3vNZCAfd5yeGlxHoHxauKUeLtwj4ZCqZB87UZBX9akSb3FZC6OevzdB6HEtgZD';
+        const accessToken = process.env.FACEBOOKACCESSTOKEN;
         var apiUrl = 'https://graph.facebook.com/v13.0/' + pixelId + '/events';
 
         var xhr = new XMLHttpRequest();
