@@ -1,12 +1,12 @@
 <?php
-$pixel_id = getenv('FACEBOOKPIXELID');
+$pixel_id = $_ENV['FACEBOOKPIXELID'];
 
 if (!$pixel_id) {
   // If FACEBOOK_PIXEL_ID is not set, exit the script
   exit();
 }
 
-$access_token = getenv('FACEBOOKACCESSTOKEN');
+$access_token = $_ENV['FACEBOOKACCESSTOKEN'];
 
 if (!$access_token) {
   // If FACEBOOK_ACCESS_TOKEN is not set, exit the script
