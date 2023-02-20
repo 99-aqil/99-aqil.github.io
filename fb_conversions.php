@@ -1,9 +1,4 @@
 <?php
-// ------------------------------------------------
-// This is a Facebook Conversions API PHP Integration
-// Created by: Gilberto C.
-// InteractiveUtopia.com
-// ------------------------------------------------
 // First, we need to start by obtaining the information that will be sent to Facebook
 // ------------------------------------------------
 
