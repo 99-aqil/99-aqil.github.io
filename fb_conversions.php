@@ -1,49 +1,46 @@
 <?php
-// First, we need to start by obtaining the information that will be sent to Facebook
-// ------------------------------------------------
+$pixel_id = getenv('FACEBOOKPIXELID');
 
-// ------------------------------------------------
-// Get Current User IP Address
-if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-    $user_ip = $_SERVER['HTTP_CLIENT_IP'];
-} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-    $user_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-} else {
-    $user_ip = $_SERVER['REMOTE_ADDR'];
+if (!$pixel_id) {
+  // If FACEBOOK_PIXEL_ID is not set, exit the script
+  exit();
 }
 
-// ------------------------------------------------
-// Get current page
-$actual_link = "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-//echo $actual_link;
+$access_token = getenv('FACEBOOKACCESSTOKEN');
 
-// ------------------------------------------------
-// Generate Json code to provide
-$submitJson = '{
-    "data": [
-        {
-            "action_source": "website",
-            "event_name": [
-                "Google",
-                "Microsoft",
-                "OpenAI"
-            ],
-            "event_time": ' . time() . ',
-            "event_source_url": "' . $actual_link . '",
-            "user_data": {
-                "client_ip_address": "' . $user_ip . '",
-                "client_user_agent": "' . $_SERVER['HTTP_USER_AGENT'] . '"
-            }
-        }
-    ]
-}';
+if (!$access_token) {
+  // If FACEBOOK_ACCESS_TOKEN is not set, exit the script
+  exit();
+}
 
-// ------------------------------------------------
-// Set the Facebook Conversions API URL
-$url = "https://graph.facebook.com/v12.0/{554061686441388}/events";
+if (isset($_POST['event_name'])) {
+  $event_name = $_POST['event_name'];
+  $user_ip = $_SERVER['REMOTE_ADDR'];
+  $user_agent = $_SERVER['HTTP_USER_AGENT'];
+  $event_time = time();
 
-// ------------------------------------------------
-// Use cURL to send the POST request
-include './curl.class.php';
-$_curl_ = new CurlServer();
-$_curl_->post_request($url, $submitJson);
+  $data = array(
+    'data' => array(
+      array(
+        'event_name' => $event_name,
+        'event_time' => $event_time,
+        'user_data' => array(
+          'client_ip_address' => $user_ip,
+          'client_user_agent' => $user_agent
+        )
+      )
+    )
+  );
+
+  $url = "https://graph.facebook.com/v12.0/{$pixel_id}/events";
+  $curl = curl_init($url);
+  curl_setopt($curl, CURLOPT_POST, true);
+  curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+  curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+    'Content-Type: application/json',
+    'Authorization: Bearer ' . $access_token
+  ));
+  curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+  $response = curl_exec($curl);
+  curl_close($curl);
+}
